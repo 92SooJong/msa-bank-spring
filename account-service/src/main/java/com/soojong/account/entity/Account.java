@@ -14,6 +14,16 @@ public class Account {
     @Column(name = "ACCOUNT_ID")
     private Long id;
 
+    @Column(name ="CUSTOMER_ID")
+    private Long customerId;
 
+    @Column(name = "CUSTOMER_NAME")
+    private String customerName;
+
+    @Column(name = "ACCOUNT_NAME")
+    private String accountName;
+
+    @Column(name = "ACCOUNT_BALANCE")
+    private int balance;
 
 }
