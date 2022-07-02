@@ -23,7 +23,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation'com.h2database:h2'
 
-	implementation 'io.springfox:springfox-boot-starter:3.0.0' // http://{Server-Address}:{Port}/swagger-ui/index.html
+	implementation 'io.springfox:springfox-boot-starter:3.0.0' // swagger 3.0 http://{Server-Address}:{Port}/swagger-ui/index.html
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix:2.2.10.RELEASE' // netflix-hystrix
+
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
