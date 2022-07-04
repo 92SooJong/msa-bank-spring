@@ -1,0 +1,52 @@
+
+# server
+server:
+  port: 8081
+  servlet:
+    context-path: /bank/account
+
+
+# Spring
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:account
+  session:
+    store-type: jdbc
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher #Swagger 3
+# Environment
+CUSTOMER: bank-customer
+
+customer:
+  api:
+    url: http://localhost:8080/bank/customer
+
+# Circuit Breaker
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 5
+      permittedNumberOfCallsInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+    shared:
+      slidingWindowSize: 100
+      permittedNumberOfCallsInHalfOpenState: 30
+      waitDurationInOpenState: 1s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+  instances:
+    backendA:
+      baseConfig: default

@@ -11,8 +11,8 @@ public class AccountController {
 
     private final AccountService accountService;
 
-
-    public Long createAccount(@RequestBody Account account){
+    @PostMapping("/api/v1")
+    public Long createAccount(@RequestBody Account account) throws Exception {
         return accountService.createAccount(account);
     }
 

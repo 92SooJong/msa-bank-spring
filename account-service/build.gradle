@@ -24,7 +24,7 @@ dependencies {
 	implementation'com.h2database:h2'
 
 	implementation 'io.springfox:springfox-boot-starter:3.0.0' // swagger 3.0 http://{Server-Address}:{Port}/swagger-ui/index.html
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix:2.2.10.RELEASE' // netflix-hystrix
+	implementation 'io.github.resilience4j:resilience4j-spring-boot2:1.7.1' // netflix-hystrix
 
 
 	compileOnly 'org.projectlombok:lombok'
