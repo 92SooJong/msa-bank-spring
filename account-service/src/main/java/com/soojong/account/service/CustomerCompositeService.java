@@ -1,6 +1,7 @@
 package com.soojong.account.service;
 
 import com.soojong.account.dto.Customer;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,18 +20,18 @@ public class CustomerCompositeService {
     private final RestTemplate restTemplate;
 
 
-    //@io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker(name = "backendA",fallbackMethod = "fallbackRetrieveCustomer")
-    public Customer retrieveCustomer(Long customerId) throws Exception {
+    @CircuitBreaker(name = "backendA",fallbackMethod = "fallbackRetrieveCustomer")
+    public String retrieveCustomer(Long customerId) throws Exception {
         String apiUrl = CUSTOMER_API_URL + "/api/v1/{customer-id}";
 
         Customer forObject = restTemplate.getForObject(apiUrl, Customer.class, customerId);
         //Customer forObject = new Customer();
         log.info(forObject.toString());
 
-        return forObject;
+        return forObject.toString();
     }
 
-    public String fallbackRetrieveCustomer(HttpServerErrorException ex){
+    public String fallbackRetrieveCustomer(Exception ex){
 //        String msg = "restTemplate를 이용하여 " + cstmId + " 고객정보 조회 서비스 호출에 문제가 있습니다.";
 //        return msg;
         return "Recovered HttpServerErrorException: " + ex.getMessage();

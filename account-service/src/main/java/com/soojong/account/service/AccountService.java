@@ -17,7 +17,7 @@ public class AccountService {
     public Long createAccount(Account account) throws Exception {
 
         // 2) 고객정보 조회 (계좌테이블에 '고객이름' 저장을 위해)
-        Customer customer = customerCompositeService.retrieveCustomer(account.getCustomerId());
+        customerCompositeService.retrieveCustomer(account.getCustomerId());
 
 
         //account.(customer);
