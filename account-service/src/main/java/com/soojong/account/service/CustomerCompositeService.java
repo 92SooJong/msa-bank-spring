@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -21,22 +23,18 @@ public class CustomerCompositeService {
 
 
     @CircuitBreaker(name = "backendA",fallbackMethod = "fallbackRetrieveCustomer")
-    public String retrieveCustomer(Long customerId) throws Exception {
+    public Optional<Customer> retrieveCustomer(Long customerId) throws Exception {
         String apiUrl = CUSTOMER_API_URL + "/api/v1/{customer-id}";
-
         Customer forObject = restTemplate.getForObject(apiUrl, Customer.class, customerId);
-        //Customer forObject = new Customer();
-        log.info(forObject.toString());
 
-        return forObject.toString();
+        return Optional.ofNullable(forObject);
     }
 
-    public String fallbackRetrieveCustomer(Exception ex){
-//        String msg = "restTemplate를 이용하여 " + cstmId + " 고객정보 조회 서비스 호출에 문제가 있습니다.";
-//        return msg;
-        return "Recovered HttpServerErrorException: " + ex.getMessage();
-//        log.error(msg,t);
-//        throw new Exception();
+    public Optional<Customer> fallbackRetrieveCustomer(Exception ex){
+
+        System.out.println("고객 정보를 불러오지 못했습니다");
+        return Optional.empty();
+
     }
 
 

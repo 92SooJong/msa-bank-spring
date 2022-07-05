@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AccountService {
@@ -16,11 +18,12 @@ public class AccountService {
 
     public Long createAccount(Account account) throws Exception {
 
-        // 2) 고객정보 조회 (계좌테이블에 '고객이름' 저장을 위해)
-        customerCompositeService.retrieveCustomer(account.getCustomerId());
 
+        Optional<Customer> optionalCustomer = customerCompositeService.retrieveCustomer(account.getCustomerId());
 
-        //account.(customer);
+        Customer customer = optionalCustomer.orElseThrow(() -> new Exception("고객정보가 없습니다!"));
+
+        account.setCustomerName(customer.getCustomerName());
 
         return accountRepository.save(account).getId();
     }

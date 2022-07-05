@@ -15,7 +15,6 @@ public class CustomerController {
     @ApiOperation(value = "고객기본조회", httpMethod = "GET", notes = "고객기본조회")
     @GetMapping("/api/v1/{customer-id}")
     public Customer retrieveCustomer(@PathVariable(name = "customer-id") Long userId) throws Exception {
-        Thread.sleep(100000);
         return customerService.retrieveCustomer(userId);
     }
 

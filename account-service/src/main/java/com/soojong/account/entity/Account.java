@@ -1,5 +1,6 @@
 package com.soojong.account.entity;
 
+import lombok.Data;
 import lombok.Getter;
 
 import javax.persistence.Column;
@@ -7,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-@Getter
+@Data
 public class Account {
 
     @Id
