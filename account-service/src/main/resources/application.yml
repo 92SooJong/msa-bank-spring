@@ -33,16 +33,16 @@ customer:
 resilience4j.circuitbreaker:
   instances:
     backendA:
-      registerHealthIndicator: true
-      eventConsumerBufferSize: 10
-      failureRateThreshold: 50
-      minimumNumberOfCalls: 5
-      automaticTransitionFromOpenToHalfOpenEnabled: true
-      waitDurationInOpenState: 5s
-      permittedNumberOfCallsInHalfOpenState: 3
+      slidingWindowType: COUNT_BASED
       slidingWindowSize: 10
-      slidingWindowType: TIME_BASED
-      slowCallDurationThreshold : 3000
+      failureRateThreshold : 70 # OPEN 상태로 변경을 위한 실패 비율
+      slowCallRateThreshold: 70 # OPEN 상태로 변경을 위한 느린 호출 비율
+      slowCallDurationThreshold : 1s
+      minimumNumberOfCalls: 10 # 실패 계산을 위한 최소한의 요청개수
+
+
+      #waitDurationInOpenState: 60s # open에서 half_open으로 전환되기위한 대기시간
+      #permittedNumberOfCallsInHalfOpenState: 1 # half_open일때 상태검사를 최소 요청개수
 
 #management:
 #  health:

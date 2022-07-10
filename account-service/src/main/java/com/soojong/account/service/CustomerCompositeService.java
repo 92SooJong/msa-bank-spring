@@ -11,20 +11,20 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class CustomerCompositeService {
 
     @Value("${customer.api.url}")
     private String CUSTOMER_API_URL;
-
     private final RestTemplate restTemplate;
 
 
     @CircuitBreaker(name = "backendA",fallbackMethod = "fallbackRetrieveCustomer")
     public Optional<Customer> retrieveCustomer(Long customerId){
         String apiUrl = CUSTOMER_API_URL + "/api/v1/{customer-id}";
+
         Customer forObject = restTemplate.getForObject(apiUrl, Customer.class, customerId);
 
         return Optional.ofNullable(forObject);
@@ -32,11 +32,10 @@ public class CustomerCompositeService {
 
     public Optional<Customer> fallbackRetrieveCustomer(Long customerId,Exception ex){
 
-        System.out.println(customerId+"의 고객 정보를 불러오지 못했습니다");
+        log.info(ex.getClass()+" => "+ex.getMessage());
+        log.info("{} ID를 가진 고객 정보를 불러오지 못했습니다",customerId);
         return Optional.empty();
 
     }
-
-
 
 }
